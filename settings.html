@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="Style/output.css">
+</head>
+<body>
+    <nav class="flex fixed" id="aside">
+    </nav>
+
+    <section class="ml-20">
+        <h1 class="font-bold text-4xl">Settings</h1>
+
+        <div class="mt-8 space-y-4">
+            <div class="text-center">
+                <div class="flex items-center justify-center">
+                    <img src="./Src/defaultProfile.png" class="rounded-full" alt="" id="profileImage" width="150px">
+                    <button id="EditProfile" class="px-6 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500">Edit</button>
+                </div>
+                <input type="file" id="profileInput" class="mt-4 p-2 border border-gray-300 rounded w-full text-center hidden" accept="image/*">
+
+                <div class="flex items-center justify-center mt-2">
+                    <span id="profileName" class="text-4xl pb-2"></span> 
+                    <button id="EditUsername" class="px-6 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500">Edit</button>
+                </div>
+
+                <input type="text" id="usernameInput" class="mt-4 p-2 border border-gray-300 rounded w-full text-center hidden" placeholder="Enter your username [Enter]">
+                <button id="EditPassword" class="px-6 py-2 mt-4 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500">Change Password</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="overlay" class="fixed top-0 w-full h-screen bg-[#101828ae] bg-opacity-50 z-10 hidden">
+        <div class="flex items-center justify-center h-screen">
+            <div class="bg-white rounded-lg shadow-lg p-4 w-130 h-fit max-h-100 overflow-auto">
+                <input id="oldPassword" type="text" placeholder="Enter your old Password" class="mt-4 p-2 border border-gray-300 rounded w-full">
+                <input id="newPassword" type="text" placeholder="Enter your new Password" class="mt-4 p-2 border border-gray-300 rounded w-full hidden">
+
+                <div class="flex justify-end">
+                    <button id="closeBtn" class="mt-2 px-4 py-2 bg-red-500 text-white rounded-full">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="Script/settings.js" type="module"></script>
+</body>
+</html>
