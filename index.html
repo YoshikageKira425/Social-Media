@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="Style/output.css">
+</head>
+<body>
+    <nav class="flex fixed">
+        <div id="aside"></div>
+        
+        <div class="h-screen py-8 overflow-y-auto bg-white border-l border-r sm:w-64 w-60 dark:bg-gray-900 dark:border-gray-700">
+            <h2 class="px-5 text-lg font-medium text-center text-gray-800 dark:text-white">Friends</h2>
+            
+            <div class="flex items-center justify-center mt-4 mb-4">
+                <button id="findFriendBtn" class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500">Find Friend</button>
+            </div>
+
+            <hr class="text-gray-700 mb-4">
+
+            <div id="friendList" class="mt-8 space-y-4">
+                
+            </div>
+        </div>
+    </nav>
+
+    <div class="ml-80">
+
+        <div id="chat" class="pt-14">
+
+        </div>
+
+        <div class="fixed w-full bottom-0">
+            <input id="Text" type="text" class="w-full py-3 pl-3 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40" placeholder="Search">
+        </div>
+    </div>
+
+    <div id="overlay" class="fixed top-0 w-full h-screen bg-[#101828ae] bg-opacity-50 z-10 hidden" id="modal">
+        <div class="flex items-center justify-center h-screen">
+            <div class="bg-white rounded-lg shadow-lg p-6 w-130 h-fit max-h-100 overflow-auto">
+                <h2 class="text-lg font-semibold text-gray-700">Add Friend</h2>
+                <input id="friendInput" type="text" placeholder="Enter friend's username" class="mt-4 p-2 border border-gray-300 rounded w-full">
+                <div id="friendListSearch" class="grid gap-4 mt-5">
+                    
+                </div>
+
+                <div class="flex justify-end">
+                    <button id="closeBtn" class="mt-2 px-4 py-2 bg-red-500 text-white rounded-full">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="Script/index.js" type="module"></script>
+</body>
+</html>
