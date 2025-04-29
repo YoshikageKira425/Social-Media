@@ -1,3 +1,5 @@
+import { MakeNotification } from "./Component.js";
+
 document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -12,11 +14,11 @@ document.querySelector("form").addEventListener("submit", (e) => {
         const existingUser = users.find(user => user.password === password && user.email === email);
         if (existingUser) {
             localStorage.setItem("currentUser", JSON.stringify(existingUser));
-            alert("You have log in succesfuly!");
+            localStorage.setItem("recently", true);
             window.location.href = "index.html";
         }
         else {
-            alert("Email or password are incorrent!");
+            MakeNotification("Error", "Email or password are incorrent!");
         }
     }
 });

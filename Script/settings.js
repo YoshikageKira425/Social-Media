@@ -1,4 +1,4 @@
-import { SideBar } from "./Component.js";
+import { SideBar, MakeNotification } from "./Component.js";
 SideBar();
 
 let isLogIn = localStorage.getItem("currentUser") !== null;
@@ -23,12 +23,12 @@ document.getElementById("usernameInput").addEventListener("keypress", (e) => {
         const newUsername = e.target.value.trim();
         
         if (!newUsername) {
-            alert("Username cannot be empty!");
+            MakeNotification("Error", "Username cannot be empty!")
             return;
         }
 
         if (users.some(user => user.username === newUsername && user.username !== currentUser.username)) {
-            alert("Username already taken!");
+            MakeNotification("Error", "Username cannot be empty!")
             return;
         }
 
@@ -42,7 +42,7 @@ document.getElementById("usernameInput").addEventListener("keypress", (e) => {
         updateData();
         updateUi();
 
-        alert("Username updated successfully!");
+        MakeNotification("Success", "Your usename has been updated!")
         e.target.value = "";
         e.target.classList.add("hidden");
     }
@@ -73,7 +73,7 @@ document.getElementById("profileInput").addEventListener("change", (e) => {
             document.getElementById("profileImage").src = imageUrl;
 
             updateData();
-            alert("Profile picture updated successfully!");
+            MakeNotification("Success", "Profile picture updated successfully!");
         };
         
         reader.readAsDataURL(file); 
@@ -96,19 +96,19 @@ oldPassword.addEventListener("keyup", e =>
     if (e.key === "Enter"){
         if (value === "")
         {
-            alert("Type a password!!");
+            MakeNotification("Error", "Type a password!");
             return;
         }
     
         if (value !== currentUser.password)
         {
-            alert("You type the wrong password!!!")
+            MakeNotification("Error", "You type the wrong password!");
             return;
         }
     
         oldPassword.classList.add("hidden");
         newPassword.classList.remove("hidden");
-        alert("Now type the new password!!!")
+        MakeNotification("Info", "Now type the new password!");
     }
 })
 newPassword.addEventListener("keyup", e => 
@@ -118,7 +118,7 @@ newPassword.addEventListener("keyup", e =>
     {
         if (value === "")
         {
-            alert("Type a password!!");
+            MakeNotification("Error", "Type a password!");
             return;
         }
         
@@ -129,7 +129,7 @@ newPassword.addEventListener("keyup", e =>
         
         updateData();
         
-        alert("You updated your password!!");
+        MakeNotification("Success", "You updated your password!")
         document.getElementById("overlay").classList.add("hidden");
     }
 })

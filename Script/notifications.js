@@ -1,4 +1,4 @@
-import { SideBar } from "./Component.js";
+import { SideBar, MakeNotification, NewNotification } from "./Component.js";
 SideBar();
 
 let isLogIn = localStorage.getItem("currentUser") !== null;
@@ -31,23 +31,10 @@ function displayNotifications() {
         if (!user) return;
 
         const notificationItem = document.createElement("div");
-        notificationItem.innerHTML = `
-            <div class="w-full max-w-md px-8 py-4 mt-16 bg-white rounded-lg shadow-lg dark:bg-gray-800">
-                <div class="flex justify-center -mt-16 md:justify-end">
-                    <img class="object-cover w-20 h-20 border-2 border-blue-500 rounded-full dark:border-blue-400" 
-                         alt="Profile avatar" 
-                         src="${user.profilePicture || "./Src/defaultProfile.png"}">
-                </div>
-                
-                <p class="mt-2 text-sm text-gray-600 dark:text-gray-200">${notification.message}</p>
-                
-                <div class="flex justify-end mt-4">
-                    <button class="accept-btn px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500">Accept</button>
-                    <button class="reject-btn ml-2 px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-red-600 rounded-lg hover:bg-red-500">Reject</button>
-                    <span class="pl-3 py-2 text-lg font-medium text-blue-600 dark:text-blue-300">${user.username}</span>
-                </div>
-            </div>
-        `;
+        notificationItem.innerHTML = NewNotification(user.profilePicture, notification.message, user.username, 
+            `<button class="accept-btn sm:text-lg text-sm sm:px-6 px-3 sm:py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500">Accept</button>`,
+            `<button class="reject-btn sm:text-lg text-sm sm:px-6 px-3 sm:py-2 ml-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-red-600 rounded-lg hover:bg-red-500">Reject</button>`
+        );
 
         const acceptBtn = notificationItem.querySelector(".accept-btn");
         const rejectBtn = notificationItem.querySelector(".reject-btn");
@@ -60,59 +47,48 @@ function displayNotifications() {
 }
 
 function acceptFriendRequest(username) {
-    try {
-        const user = users.find(user => user.email === username);
-        if (!user) throw new Error("User not found");
+    const user = users.find(user => user.email === username);
 
-        const friendInfo = {
-            email: user.email
-        };
+    const friendInfo = {
+        email: user.email
+    };
 
-        if (!currentUser.friend) currentUser.friend = [];
+    if (!currentUser.friend) currentUser.friend = [];
         currentUser.friend.push(friendInfo);
 
-        const userIndex = users.findIndex(u => u.email === username);
-        if (userIndex !== -1) {
-            if (!users[userIndex].friend) 
-                users[userIndex].friend = [];
+    const userIndex = users.findIndex(u => u.email === username);
+    if (userIndex !== -1) {
+        if (!users[userIndex].friend) 
+            users[userIndex].friend = [];
 
-            users[userIndex].friend.push({
-                email: currentUser.email
-            });
-        }
+        users[userIndex].friend.push({
+            email: currentUser.email
+        });
+    }
 
-        const currentUserIndex = users.findIndex(u => u.email === currentUser.email);
-        if (userIndex !== -1) {
-            if (!users[currentUserIndex].friend) 
-                users[currentUserIndex].friend = [];
+    const currentUserIndex = users.findIndex(u => u.email === currentUser.email);
+    if (userIndex !== -1) {
+        if (!users[currentUserIndex].friend) 
+            users[currentUserIndex].friend = [];
 
             users[currentUserIndex].friend.push({
-                email: users[userIndex].email
-            });
-        }
-
-        removeNotification(username);
-
-        showToast(`You are now friends with ${users[userIndex].username}!`, 'success');
-
-        updateStorage();
-        displayNotifications();
-    } catch (error) {
-        console.error('Error accepting friend request:', error);
-        showToast('Failed to accept friend request', 'error');
+            email: users[userIndex].email
+        });
     }
+
+    removeNotification(username);
+
+    MakeNotification("Success", `You are now friends with ${users[userIndex].username}!`);
+
+    updateStorage();
+    displayNotifications();
 }
 
 function rejectFriendRequest(username) {
-    try {
-        removeNotification(username);
-        showToast(`Friend request from ${username} rejected`, 'info');
-        displayNotifications();
-        updateStorage();
-    } catch (error) {
-        console.error('Error rejecting friend request:', error);
-        showToast('Failed to reject friend request', 'error');
-    }
+    removeNotification(username);
+    MakeNotification("Info", `Friend request from ${username} rejected`);
+    displayNotifications();
+    updateStorage();
 }
 
 function removeNotification(username) {
@@ -129,10 +105,6 @@ function removeNotification(username) {
 function updateStorage() {
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
     localStorage.setItem("users", JSON.stringify(users));
-}
-
-function showToast(message, type = 'info') {
-    alert(message);
 }
 
 displayNotifications();

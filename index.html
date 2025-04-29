@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="Style/output.css">
+    <link rel="stylesheet" href="Style/Animation.css">
+    <link rel="shortcut icon" href="Src/whatsapp.png" type="image/x-icon">
 </head>
 <body>
-    <nav class="flex fixed">
+    <nav id="FullSideBar" class="flex fixed z-2">
         <div id="aside"></div>
         
-        <div class="h-screen py-8 overflow-y-auto bg-white border-l border-r sm:w-64 w-60 dark:bg-gray-900 dark:border-gray-700">
-            <h2 class="px-5 text-lg font-medium text-center text-gray-800 dark:text-white">Friends</h2>
+        <div class="h-screen py-8 overflow-y-auto border-l border-r w-screen lg:w-64 bg-gray-900 border-gray-700">
+            <h2 class="px-5 text-lg font-medium text-center text-white">Friends</h2>
             
             <div class="flex items-center justify-center mt-4 mb-4">
                 <button id="findFriendBtn" class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500">Find Friend</button>
@@ -25,15 +27,23 @@
         </div>
     </nav>
 
-    <div class="ml-80">
+    <div class="md:ml-80 ml-0">
 
         <div id="chat" class="pt-14">
 
         </div>
 
         <div class="fixed w-full bottom-0">
-            <input id="Text" type="text" class="w-full py-3 pl-3 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40" placeholder="Search">
+            <input id="Text" type="text" class="w-full py-3 pl-3 border rounded-md bg-gray-900 text-gray-300 border-gray-600 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40" placeholder="Search">
         </div>
+
+        <div class="fixed w-full top-0 lg:hidden">
+            <button id="closeChat" class="px-6 py-2 m-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500">X</button>
+        </div>
+    </div>
+
+    <div id="Notification" class="fixed bottom-0 right-0 mb-3 mr-3 grid gap-2 z-20">
+        
     </div>
 
     <div id="overlay" class="fixed top-0 w-full h-screen bg-[#101828ae] bg-opacity-50 z-10 hidden" id="modal">

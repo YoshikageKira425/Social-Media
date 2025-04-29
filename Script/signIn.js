@@ -1,4 +1,6 @@
-document.querySelector("form").addEventListener("submit", (e) => {
+import { MakeNotification  } from "./Component.js";
+
+document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const users = localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : [];
@@ -10,7 +12,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
     const passwordConfirm = form.passwordConfirm.value;
 
     if (password !== passwordConfirm) {
-        alert("Passwords do not match!");
+        MakeNotification("Error", "Passwords do not match!");
         return;
     }
 
@@ -18,7 +20,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
     {
         const existingUser = users.find(user => user.username === username || user.email === email);
         if (existingUser) {
-            alert("Username or email already exists!");
+            MakeNotification("Error", "Username or email already exists!");
             return;
         }
     }
@@ -34,7 +36,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
 
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
-    alert("User registered successfully!");
+    localStorage.setItem("recently", true);
 
     localStorage.setItem("currentUser", JSON.stringify(newUser));
     window.location.href = "index.html";

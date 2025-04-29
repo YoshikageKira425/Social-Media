@@ -1,10 +1,16 @@
-import { SideBar, Friend } from "./Component.js";
+import { SideBar, Friend, MakeNotification, NewNotification } from "./Component.js";
 SideBar();
 
 let isLogIn = localStorage.getItem("currentUser") !== null;
 
 if (!isLogIn) 
     window.location.href = "http://127.0.0.1:5500/signIn.html";
+
+if (localStorage.getItem("recently"))
+{
+    MakeNotification("Success", "User registered successfully!");
+    localStorage.removeItem("recently")
+}
 
 const overlay = document.getElementById("overlay");
 const findFriendBtn = document.getElementById('findFriendBtn');
@@ -21,6 +27,7 @@ const friendList = document.getElementById("friendList");
 let currentFriend = friends.length > 0 ? friends[0] : null;
 friendList.innerHTML = "";
 ShowChat();
+document.getElementById("closeChat").addEventListener("click", () => closeChat())
 
 friends.forEach((friend) => 
 {
@@ -36,6 +43,27 @@ friends.forEach((friend) =>
 function openChat(friend) {
     currentFriend = friend;
     ShowChat();
+
+    const bar = document.getElementById("FullSideBar");
+    if (window.innerWidth <= 600)
+    {
+        bar.classList.add("SlideOut")
+        setTimeout(()=>
+        {
+            bar.classList.add("hidden");
+            bar.classList.remove("SlideOut");
+        }, 500)
+    }
+}
+function closeChat() 
+{ 
+    const bar = document.getElementById("FullSideBar");
+    bar.classList.add("SlideIn");
+    bar.classList.remove("hidden");
+    setTimeout(()=>
+    {
+        bar.classList.remove("SlideIn");
+    }, 500);
 }
 
 function ShowChat(){
@@ -57,20 +85,7 @@ function ShowChat(){
         const from = users.find(user => user.email === notification.from);
 
         const element = document.createElement("div");
-        element.innerHTML = `
-            <div class="w-full mt-14 mb-16 px-3 py-4 bg-white rounded-lg shadow-lg dark:bg-gray-800">
-                <div class="flex justify-center -mt-16 md:justify-end">
-                    <img class="object-cover w-20 h-20 border-2 border-blue-500 rounded-full dark:border-blue-400" 
-                        alt="Profile avatar" 
-                        src="${from.profilePicture || "./Src/defaultProfile.png"}">
-                </div>
-                
-                <p class="mt-2 text-sm text-gray-600 dark:text-gray-200">${notification.message}</p>
-                <div class="flex justify-end">
-                    <span class="pl-3 py-2 text-lg font-medium text-blue-600 dark:text-blue-300">From ${from.username}</span>
-                </div>
-            </div>
-        `;
+        element.innerHTML = NewNotification(from.profilePicture, notification.message, from.username);
 
         chatElement.appendChild(element);
     });
@@ -82,7 +97,7 @@ document.getElementById("Text").addEventListener("keypress", (e) =>
     {
         if (currentFriend == null)
         {
-            alert("You dont have any friends!!");
+            MakeNotification("Error", "You dont have any friends!!")
             return;
         }
 
@@ -90,7 +105,7 @@ document.getElementById("Text").addEventListener("keypress", (e) =>
 
         if (chat.value === "")
         {
-            alert("Type something!");
+            MakeNotification("Error", "Type something!!")
             return;
         }
 
@@ -130,7 +145,7 @@ friendInput.addEventListener("input", e =>
     if (value === "")
         return;
 
-    const allUsers = users.filter(user => user.username.toLowerCase().includes(value.toLowerCase()));
+    const allUsers = users.filter(user => user.username.toLowerCase().includes(value.toLowerCase()) && user.username !== currentUser.username);
 
     allUsers.forEach(element => 
     {
@@ -138,8 +153,8 @@ friendInput.addEventListener("input", e =>
         newElement.innerHTML = `
             <div class="flex items-start justify-start bg-[#a5a5a5] rounded-full">
                 <img class="w-13 rounded-full mr-5" src="${element.profilePicture || "./Src/defaultProfile.png"}" alt="">
-                <p class="p-[9px] w-full font-bold text-2xl">${element.username}</p>
-                <div class="flex items-end justify-end w-full">
+                <p class="w-full font-bold sm:text-2xl text-lg">${element.username}</p>
+                <div class="flex items-end justify-end w-[61px]">
                     <button id="addFriendBtn" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-full">Add</button>
                 </div>
             </div>
@@ -156,7 +171,7 @@ function AddFriend(friendUsername) {
     const isThere = currentUser.friend.some((friend) => friend.email === friendUsername);
     
     if (isThere){
-        alert(`You have ${friendUsername} friend already!!`)
+        MakeNotification("Error", `You have ${friendUsername} friend already!!`);
         return;
     }
 
@@ -170,19 +185,18 @@ function AddFriend(friendUsername) {
                 message: `${currentUser.username} has sent you a friend request.`,
                 type: "friend request"
             });
-            console.log(user.notification);
             userFound = true;
         }
     });
 
     if (userFound) 
     {
-        alert(`Friend request sent to ${friendUsername}.`);
+        MakeNotification("Success", `Friend request sent to ${friendUsername}.`)
         updateStorage();
     } 
     else 
     {
-        alert("User not found.");
+        MakeNotification("Error", `User not found.`)
     }
 }
 

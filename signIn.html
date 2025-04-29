@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
     <link rel="stylesheet" href="Style/output.css">
+    <link rel="stylesheet" href="Style/Animation.css">
+    <link rel="shortcut icon" href="Src/whatsapp.png" type="image/x-icon">
 </head>
-<body class="h-screen flex items-center justify-center">
-    <section class="max-w-5xl p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
+<body class="min-h-screen flex items-center justify-center bg-gray-900">
+    <section class="p-6 rounded-md shadow-md bg-gray-800">
         <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">Account settings</h2>
     
         <form action="#" method="POST" class="mt-6">
@@ -40,6 +42,10 @@
         </form>
     </section>
 
-    <script src="Script/signIn.js"></script>
+    <div id="Notification" class="fixed bottom-0 right-0 mb-3 mr-3 grid gap-2 z-20">
+        
+    </div>
+
+    <script src="Script/signIn.js" type="module"></script>
 </body>
 </html>

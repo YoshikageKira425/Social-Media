@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
     <link rel="stylesheet" href="Style/output.css">
+    <link rel="stylesheet" href="Style/Animation.css">
+    <link rel="shortcut icon" href="Src/whatsapp.png" type="image/x-icon">
 </head>
 <body>
     <nav class="flex fixed" id="aside">
@@ -16,7 +18,7 @@
         <div class="mt-8 space-y-4">
             <div class="text-center">
                 <div class="flex items-center justify-center">
-                    <img src="./Src/defaultProfile.png" class="rounded-full" alt="" id="profileImage" width="150px">
+                    <img src="./Src/defaultProfile.png" class="rounded-full w-20 h-20" alt="" id="profileImage" width="150px">
                     <button id="EditProfile" class="px-6 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500">Edit</button>
                 </div>
                 <input type="file" id="profileInput" class="mt-4 p-2 border border-gray-300 rounded w-full text-center hidden" accept="image/*">
@@ -31,6 +33,10 @@
             </div>
         </div>
     </section>
+
+    <div id="Notification" class="fixed bottom-0 right-0 mb-3 mr-3 grid gap-2 z-20">
+        
+    </div>
 
     <div id="overlay" class="fixed top-0 w-full h-screen bg-[#101828ae] bg-opacity-50 z-10 hidden">
         <div class="flex items-center justify-center h-screen">
