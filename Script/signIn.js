@@ -1,6 +1,6 @@
-import { MakeNotification  } from "./Component.js";
+import { MakeNotification, PasswordValidation  } from "./Component.js";
 
-document.querySelector("form").addEventListener("submit", async (e) => {
+document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
 
     const users = localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : [];
@@ -15,6 +15,10 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         MakeNotification("Error", "Passwords do not match!");
         return;
     }
+
+    //Password Validation 
+    if (!PasswordValidation(password))
+        return;
 
     if (users.length > 0)
     {

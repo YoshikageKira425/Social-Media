@@ -1,4 +1,4 @@
-import { SideBar, MakeNotification } from "./Component.js";
+import { SideBar, MakeNotification, PasswordValidation } from "./Component.js";
 SideBar();
 
 let isLogIn = localStorage.getItem("currentUser") !== null;
@@ -11,6 +11,7 @@ const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
 updateUi();
 
+//For editing username
 document.getElementById("EditUsername").addEventListener("click", () => 
 {
     if (document.getElementById("usernameInput").classList.contains("hidden")) 
@@ -48,6 +49,7 @@ document.getElementById("usernameInput").addEventListener("keypress", (e) => {
     }
 });
 
+//For editing profile pic
 document.getElementById("EditProfile").addEventListener("click", () => 
 {
     if (document.getElementById("profileInput").classList.contains("hidden")) 
@@ -79,6 +81,8 @@ document.getElementById("profileInput").addEventListener("change", (e) => {
         reader.readAsDataURL(file); 
     }
 });
+
+//For changing password
 const oldPassword = document.getElementById("oldPassword")
 const newPassword = document.getElementById("newPassword");
 document.getElementById("EditPassword").addEventListener("click", e =>
@@ -109,6 +113,7 @@ oldPassword.addEventListener("keyup", e =>
         oldPassword.classList.add("hidden");
         newPassword.classList.remove("hidden");
         MakeNotification("Info", "Now type the new password!");
+        e.target.value = "";
     }
 })
 newPassword.addEventListener("keyup", e => 
@@ -121,6 +126,9 @@ newPassword.addEventListener("keyup", e =>
             MakeNotification("Error", "Type a password!");
             return;
         }
+
+        if (!PasswordValidation(value))
+            return;
         
         currentUser.password = value;
         const userIndex = users.findIndex(user => user.email === currentUser.email);
@@ -131,8 +139,27 @@ newPassword.addEventListener("keyup", e =>
         
         MakeNotification("Success", "You updated your password!")
         document.getElementById("overlay").classList.add("hidden");
+        e.target.value = "";
     }
 })
+document.getElementById("deleteProfile").addEventListener("click", () => 
+{
+    currentUser.friend.forEach(friend => {
+        const index = users.findIndex(f => f.email === friend.email);
+        if (index !== -1) {
+            users[index].friend.splice(index, 1);
+        }
+    });
+    const index = users.findIndex(f => f.email === currentUser.email);
+    if (index !== -1) {
+        users.splice(index, 1);
+    }
+
+    localStorage.removeItem("currentUser");
+    localStorage.setItem("users", JSON.stringify(users));
+
+    window.location.href = "http://127.0.0.1:5500/signIn.html";
+});
 
 function updateData()
 {

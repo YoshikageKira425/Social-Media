@@ -4,11 +4,11 @@ export function SideBar(alt="none"){
     sideBar.innerHTML = `
         <img class="w-auto h-9" src="./Src/whatsapp.png" alt="">
         
-        <button id="home" href="index.html" class="p-1.5 text-gray-500 focus:outline-nones transition-colors duration-200 rounded-lg dark:text-gray-400 dark:hover:bg-gray-800 hover:bg-gray-100">
+        <a href="index.html" class="p-1.5 text-gray-500 focus:outline-nones transition-colors duration-200 rounded-lg dark:text-gray-400 dark:hover:bg-gray-800 hover:bg-gray-100">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
             </svg>
-        </button>
+        </a>
     
         <a href="notifications.html" class="p-1.5 text-gray-500 focus:outline-nones transition-colors duration-200 rounded-lg dark:text-gray-400 dark:hover:bg-gray-800 hover:bg-gray-100">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -31,7 +31,6 @@ export function SideBar(alt="none"){
     `;
 
     sideBar.querySelector('#logOut').addEventListener('click', logOut);
-    sideBar.querySelector('#home').addEventListener('click', HomeButton);
 
     document.getElementById('aside').appendChild(sideBar);
 }
@@ -51,19 +50,17 @@ export function Friend(username, src, f) {
 export function MakeNotification(type, message) {
     const element = document.createElement("div");
     const container = document.getElementById("Notification");
-    let color;
+    let color = "emerald-500";
     let icon = `<svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
                 </svg>`;
-    if (type === "Success")
-        color = "emerald-500";
-    else if (type === "Error"){
+    if (type === "Error"){
         color = "red-500";
         icon = `<svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z" />
                 </svg>`
     }
-    else {
+    else if (type === "Info") {
         color = "blue-500";
         icon = `<svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z" />
@@ -73,14 +70,7 @@ export function MakeNotification(type, message) {
     element.innerHTML = `
         <div class="flex w-full max-w-sm overflow-hidden rounded-lg shadow-md bg-gray-800">
             <div class="flex items-center justify-center w-12 bg-${color}">
-                ${type === "Success" ? `
-                    <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
-                    </svg>` :
-                    `
-                    <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z" />
-                    </svg>`}
+                ${icon}
             </div>
 
             <div class="px-4 py-2 -mx-3">
@@ -126,20 +116,38 @@ export function NewNotification(profilePicture, message, username, ...other)
     `
 }
 
+export function PasswordValidation(password)
+{
+    const hasLowercase = /[a-z]/;
+    const hasUppercase = /[A-Z]/;
+    const hasNumber = /[0-9]/;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+
+    if (password.length < 6){
+        MakeNotification("Error", "Password must be at least 6 characters long!")
+        return false;
+    }
+    if (!hasLowercase.test(password)) {
+        MakeNotification("Error", "Password must contain at least one lowercase letter!");
+        return false;
+    }
+    if (!hasUppercase.test(password)) {
+        MakeNotification("Error", "Password must contain at least one uppercase letter!");
+        return false;
+    }
+    if (!hasNumber.test(password)) {
+        MakeNotification("Error", "Password must contain at least one number!");
+        return false;
+    }
+    if (!hasSpecialChar.test(password)) {
+        MakeNotification("Error", "Password must contain at least one special character!");
+        return false;
+    }
+    
+    return true;
+}
+
 function logOut() {
     localStorage.removeItem("currentUser");
     window.location.href = "http://127.0.0.1:5500/signIn.html";
-}
-function HomeButton(){
-    if (window.location.href === "http://127.0.0.1:5500/index.html")
-    {
-        if (window.innerWidth <= 600)
-        {
-
-        }
-
-        return;
-    }
-
-    window.location.href = "http://127.0.0.1:5500/index.html";
 }
